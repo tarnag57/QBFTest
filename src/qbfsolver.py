@@ -1,10 +1,9 @@
 from pyeda.inter import *
+from pyeda.boolalg import *
 
-a, b, c, d = map(exprvar, 'abcd')
-kernel = (~a | ~b) & (b | c | d) & (a | d) & (c | d) & (~c | ~d) & (~a | b | c | ~d)
-kernel = kernel.to_cnf()
+with open('aim-100-1_6-no-1.cnf', 'r') as cnf_file:
+    kernel = expr.ast2expr(parse_cnf(cnf_file.read()))
 print(kernel)
 print(list(kernel.satisfy_all()))
-with ~a, ~b:
-    sats = kernel.satisfy_one()
-    print(sats)
+sats = kernel.satisfy_one()
+print(sats)
